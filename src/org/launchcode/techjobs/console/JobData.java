@@ -78,10 +78,32 @@ public class JobData {
 
             if (aValue.contains(value)) {
                 jobs.add(row);
-            }
+            } else if (!aValue.contains(value))
+                System.out.print("Invalid choice. Try again.");
         }
 
         return jobs;
+    }
+
+    //search for a string in each column
+    public static ArrayList<HashMap<String, String>> findByValue (String column, String value) {
+
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+
+            String aValue = row.get(column);
+
+            if (aValue.contains(value)) {
+                jobs.add(row);
+            } else if (!aValue.contains(value))
+                System.out.print("Invalid choice. Try again.");
+        }
+
+        return jobs;
+
     }
 
     /**
