@@ -7,9 +7,7 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
@@ -43,6 +41,7 @@ public class JobData {
             }
         }
 
+        Collections.sort(values);
         return values;
     }
 
@@ -51,7 +50,7 @@ public class JobData {
         // load data, if not already loaded
         loadData();
 
-        return allJobs;
+        return new ArrayList<HashMap<String, String>>(allJobs);
     }
 
     /**
@@ -78,15 +77,14 @@ public class JobData {
 
             if (aValue.contains(value)) {
                 jobs.add(row);
-            } else if (!aValue.contains(value))
-                System.out.print("Invalid choice. Try again.");
+            }
         }
 
         return jobs;
     }
 
     //search for a string in each column
-    public static ArrayList<HashMap<String, String>> findByValue (String column, String value) {
+    public static ArrayList<HashMap<String, String>> findByValue (String value) {
 
         loadData();
 
@@ -94,16 +92,18 @@ public class JobData {
 
         for (HashMap<String, String> row : allJobs) {
 
-            String aValue = row.get(column);
-
-            if (aValue.contains(value)) {
-                jobs.add(row);
-            } else if (!aValue.contains(value))
-                System.out.print("Invalid choice. Try again.");
+            //String aValue = row.get(value);
+            Set columns = row.entrySet();
+            Iterator it = columns.iterator();
+            while(it.hasNext()) {
+                Map.Entry mentry = (Map.Entry)it.next();
+                if (mentry.getValue().toString().toLowerCase().contains(value.toLowerCase())) {
+                    jobs.add(row);
+                    break;
+                }
+            }
         }
-
         return jobs;
-
     }
 
     /**
