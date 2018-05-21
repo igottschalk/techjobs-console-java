@@ -75,13 +75,20 @@ public class JobData {
 
             String aValue = row.get(column);
 
-            if (aValue.contains(value)) {
+            /*if (aValue.contains(value)) {
+                jobs.add(row);
+            }*/
+
+            if (aValue.toString().toLowerCase().contains(value.toLowerCase())) {
                 jobs.add(row);
             }
         }
 
         return jobs;
     }
+
+    //if (mentry.getValue().toString().toLowerCase().contains(value.toLowerCase()))
+
 
     //search for a string in each column
     public static ArrayList<HashMap<String, String>> findByValue (String value) {
